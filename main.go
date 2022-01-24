@@ -7,13 +7,14 @@ import (
 
 func main() {
 	var cache1 = newCache()
-	var ch, value, ttl int
+	var ch, value int
+	var ttl int64
 	var key string
 	go checkExpiry(&cache1)
 	for {
 		fmt.Println(time.Now().Unix())
 		fmt.Println("Enter choice: ")
-		fmt.Println("1. Set Value with default TTl \n 2. Set Value with TTl \n 3. Get Value \n 4. Delete Value \n 5. Print")
+		fmt.Println("1. Set Value with default TTl \n2. Set Value with TTl \n 3. Get Value \n 4. Delete Value \n 5. Print")
 		fmt.Scanln(&ch)
 		switch ch {
 		case 1:
@@ -38,8 +39,4 @@ func main() {
 			break
 		}
 	}
-}
-
-func newCache() {
-	panic("unimplemented")
 }
