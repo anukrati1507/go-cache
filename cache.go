@@ -1,28 +1,28 @@
 package main
 
 import (
-	"time"
 	"fmt"
+	"time"
 )
 
 type Data struct {
 	data           int64
 	expirationTime int64
-	index int
+	index          int
 }
 
 type InMap struct {
-	Map map[string]*Item
+	Map map[string]*Data
 }
 
 type Parameters struct {
 	data int64
-	key string
-	ttl int64
+	key  string
+	ttl  int64
 }
 
-func (c *InMap) set(param Parameters) (item *Data, exists bool){
-	if param.ttl == 0{
+func (c *InMap) set(param Parameters) (item *Data, exists bool) {
+	if param.ttl == 0 {
 		param.ttl = 60
 	} else if param.ttl < 0 {
 		panic("Time cannot be a negative entity")
@@ -56,7 +56,7 @@ func (c *InMap) delete(key string) (item *Data) {
 
 func (c *InMap) printMap() {
 	for key, value := range c.Map {
-		fmt.Printf("%s: %d %d \n",key, value.data, value.expirationTime)
+		fmt.Printf("%s: %d %d \n", key, value.data, value.expirationTime)
 	}
 }
 
