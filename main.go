@@ -7,7 +7,7 @@ import (
 
 func main() {
 	var cache1 = newCache()
-	var ch, value int
+	var ch, value int64
 	var ttl int64
 	var key string
 	go checkExpiry(&cache1)
@@ -34,7 +34,8 @@ func main() {
 			fmt.Scan(&key)
 			cache1.delete(key)
 		case 5:
-			fmt.Print(cache1.Map)
+			//fmt.Print(cache1.Map)
+			cache1.printMap()
 		default:
 			break
 		}
