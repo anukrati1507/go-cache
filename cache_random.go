@@ -35,14 +35,15 @@ func (c *InMap) set(param Parameters) (item *Data, exists bool) {
 func (c *InMap) get(key string) (value int64) {
 	var state bool
 	var item *Data
-	
+
 	if time.Now().Unix() > c.Map[key].expirationTime {
-		delete(c.Map,key)
-	}
-	item, state = c.Map[key]
-	value = item.data
-	if !state {
-		panic("Key not found")
+		delete(c.Map, key)
+	} else {
+		item, state = c.Map[key]
+		value = item.data
+		if !state {
+			panic("Key not found")
+		}
 	}
 	return
 }
@@ -74,19 +75,19 @@ func (c *InMap) printMap() {
 		fmt.Printf("%s: %d %d \n", key, value.data, value.expirationTime)
 	}
 }
-func MapRandomKeyGet(mapI interface{}) {
+func MapRandomKeyGet(mapI *InMap) {
 	keys := reflect.ValueOf(mapI).MapKeys()
 	keydel := keys[rand.Intn(len(keys))].Interface()
-	deleteRandom(keydel.(string))
+	mapI.deleteRandom(keydel.(string))
 	return
 }
 func checkExpiry(inmap *InMap) {
-	for x := range time.Tick(5 * time.Minute) {
+	for x := range time.Tick(20 * time.Second) {
 		//f(x)'
 		fmt.Println(x)
-		for i := 1; i < 10; i++ {
-			if(len(inmap.Map)>10) {
-			MapRandomKeyGet(inmap)
+		for i := 1; i < 3; i++ {
+			if len(inmap.Map) > 3 {
+				MapRandomKeyGet(inmap)
 			}
 		}
 	}
