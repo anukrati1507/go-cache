@@ -35,6 +35,10 @@ func (c *InMap) set(param Parameters) (item *Data, exists bool) {
 func (c *InMap) get(key string) (value int64) {
 	var state bool
 	var item *Data
+	
+	if time.Now().Unix() > c.Map[key].expirationTime {
+		delete(c.Map,key)
+	}
 	item, state = c.Map[key]
 	value = item.data
 	if !state {
@@ -42,9 +46,9 @@ func (c *InMap) get(key string) (value int64) {
 	}
 	return
 }
-func (c *InMap) delete(key string) (item *Data) {
+func (c *InMap) delete(key string) {
 	var state bool
-	item, state = c.Map[key]
+	_, state = c.Map[key]
 	if !state {
 		panic("Key not found")
 	}
@@ -52,9 +56,9 @@ func (c *InMap) delete(key string) (item *Data) {
 
 	return
 }
-func deleteRandom(key string, c *InMap) (item *Data) {
+func (c *InMap) deleteRandom(key string) {
 	var state bool
-	item, state = c.Map[key]
+	_, state = c.Map[key]
 	if state {
 		//panic("Key not found")
 		if time.Now().Unix() > c.Map[key].expirationTime {
@@ -87,5 +91,5 @@ func checkExpiry(inmap *InMap) {
 }
 func newCache() (inmap InMap) {
 	inmap = InMap{Map: make(map[string]*Data)}
-	return inmap
+	return
 }
