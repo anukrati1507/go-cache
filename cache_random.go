@@ -86,7 +86,7 @@ func (c *InMap) deleteRandom(key string) {
 //print the values present in the map
 func (c *InMap) printMap() {
 	for key, value := range c.Map {
-		fmt.Printf("%s: %d %d \n", key, value.data, value.expirationTime)
+		fmt.Println(key, value.data, value.expirationTime)
 	}
 }
 
