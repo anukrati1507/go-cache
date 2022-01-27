@@ -85,7 +85,9 @@ func checkExpiry(inmap *InMap) {
 		//f(x)'
 		fmt.Println(x)
 		for i := 1; i < 10; i++ {
+			if(len(inmap.Map)>10) {
 			MapRandomKeyGet(inmap)
+			}
 		}
 	}
 }
